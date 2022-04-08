@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ShowHideUIByScale : ShowHideByTween
 {
@@ -13,6 +14,8 @@ public class ShowHideUIByScale : ShowHideByTween
     [SerializeField] private Ease hideEase = Ease.OutCirc;
     [SerializeField] private float hideDuration = 0.5f;
     [SerializeField] private bool hideOnStart;
+    [SerializeField] private UnityEvent onShowEvent;
+    [SerializeField] private UnityEvent onHideEvent;
     
     private RectTransform _rectTransform;
     private bool _onDisplay;
@@ -35,6 +38,7 @@ public class ShowHideUIByScale : ShowHideByTween
             .SetDelay(delay).OnComplete((() =>
             {
                 _onDisplay = true;
+                onShowEvent?.Invoke();
             }));
     
     public override Tween Hide(float delay = 0) => 
@@ -43,6 +47,7 @@ public class ShowHideUIByScale : ShowHideByTween
             .SetDelay(delay).OnComplete((() =>
             {
                 _onDisplay = false;
+                onHideEvent?.Invoke();
             }));
     
     public override bool OnDisplay() => _onDisplay;
