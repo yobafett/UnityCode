@@ -9,12 +9,12 @@ public class UIScreenTransition : MonoBehaviour
 {
     [SerializeField] private UIScreen fromScreen;
     [SerializeField] private UIScreen toScreen;
+    [SerializeField] private Button trigger;
 
     private void Awake()
     {
-        gameObject.GetComponent<Button>().onClick.AddListener((() =>
+        trigger.onClick.AddListener((() =>
         {
-            AudioManager.Instance.PlayClickSound();
             fromScreen.Hide().OnComplete((() =>
             {
                 fromScreen.enabled = false;
